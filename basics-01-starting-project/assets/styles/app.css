@@ -70,7 +70,7 @@ header {
 }
 
 #calc-actions button {
-  width: 4rem;
+  min-width: 3rem;
 }
 
 #calc-actions {
