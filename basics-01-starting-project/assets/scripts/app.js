@@ -78,7 +78,7 @@ function reset() {
 	currentCalculationData = ""
 	currentResult = 0
 	outputResult(currentResult, currentCalculationData)
-	console.log(logEntries)
+	console.table(logEntries)
 }
 
 addBtn.addEventListener("click", add)
