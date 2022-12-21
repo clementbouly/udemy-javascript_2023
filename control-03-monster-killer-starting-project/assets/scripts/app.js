@@ -19,11 +19,24 @@ let battleLog = []
 
 function setMaxHealthValueFromUser() {
 	maxHealth = parseInt(prompt("Maximum health for you and the monster.", "100"))
+	console.log("🚀 ~ setMaxHealthValueFromUser ~ maxHealth", maxHealth)
+
 	if (!isNaN(maxHealth) && maxHealth > 0) {
 		adjustHealthBars(maxHealth)
 	} else {
-		alert("Invalid health value. Default value of 100 used.")
+		throw {
+			message: "Invalid health value. Default value of 100 used.",
+		}
 	}
+}
+
+try {
+	setMaxHealthValueFromUser()
+} catch (error) {
+	console.log("🚀 ~ error", error)
+	console.log(error.message)
+	maxHealth = DEFAULT_MAX_HEALTH
+	adjustHealthBars(maxHealth)
 }
 
 function endRound() {
@@ -97,6 +110,6 @@ function writeToLog(event, value, monsterHealth, playerHealth) {
 
 attackBtn.addEventListener("click", () => attackHandler(NORMAL_ATTACK))
 strongAttackBtn.addEventListener("click", () => attackHandler(STRONG_ATTACK))
-maxHealthBtn.addEventListener("click", setMaxHealthValueFromUser)
+// maxHealthBtn.addEventListener("click", setMaxHealthValueFromUser)
 healBtn.addEventListener("click", healHandler)
 logBtn.addEventListener("click", () => console.table(battleLog))
