@@ -1,0 +1,50 @@
+body {
+    height: 100vh;
+    display: grid;
+    place-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+#start-game-btn{
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: all .4s;
+}
+
+#start-game-btn:hover {
+    background-color: #3e8e41;
+    transform: scale(1.1);
+}
+
+#start-game-btn:active {
+    background-color: hsl(122, 35%, 46%);
+    animation: increaseSize 1s linear ;
+}
+
+@keyframes fullRotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes increaseSize {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(2);
+    }
+}
