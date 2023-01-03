@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>DOM Interaction</title>
+		<script src="app.js" defer></script>
+		<style>
+			.visible {
+				display: block;
+			}
+
+			.hidden {
+				display: none;
+			}
+
+			.bg-red {
+				background-color: red;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Dom manipulation</h1>
+		<button class="btn">Action</button>
+		<section>
+			<ul class="bg-red">
+				<li class="list-item">item 1</li>
+				<li class="list-item">item 2</li>
+				<li id="list-item-special">item 3</li>
+				<li class="list-item">item 4</li>
+			</ul>
+		</section>
+
+		<input type="text" class="input" value="test" />
+	</body>
+</html>

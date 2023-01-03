@@ -81,7 +81,7 @@ function reset() {
 	console.table(logEntries)
 }
 
-addBtn.addEventListener("click", add)
+addBtn.addEventListener("click", () => createAndWriteOutput("+"))
 subtractBtn.addEventListener("click", substract)
 multiplyBtn.addEventListener("click", multiply)
 divideBtn.addEventListener("click", divide)
