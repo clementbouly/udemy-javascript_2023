@@ -15,7 +15,7 @@ button:focus {
 }
 
 main {
-  transition: all .5s ease-out;
+  transition: all .3s ease-out;
 }
 
 header {
