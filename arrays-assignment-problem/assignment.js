@@ -36,3 +36,6 @@ list.add(2)
 list.add(1)
 
 console.log(list)
+
+// modify css variable --color1 in the body
+document.body.style.setProperty('--color1', 'red')

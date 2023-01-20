@@ -3,8 +3,11 @@ html {
 }
 
 body {
+  --color1: #521751;
+  --color2: #fa923f;
   margin: 5rem;
-  color: #521751;
+  color: var(--color1);
+  ;
 }
 
 h1 {
