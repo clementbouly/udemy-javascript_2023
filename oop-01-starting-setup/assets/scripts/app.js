@@ -1,11 +1,43 @@
 const FAKE_IMAGE_URL = "https://picsum.photos/800"
 
-class Product {
+const FAKE_PRODUCTS = [
+	["Apples", FAKE_IMAGE_URL, "Apples are a good source of fiber", 10],
+	["Oranges", FAKE_IMAGE_URL, "Oranges are a good source of vitamin C", 15],
+	["Bananas", FAKE_IMAGE_URL, "Bananas are a good source of potassium", 20],
+	["Grapes", FAKE_IMAGE_URL, "Grapes are a good source of antioxidants", 25],
+]
+
+class Component {
+	constructor(renderHookId, shouldRender = true) {
+		this.renderHookId = renderHookId
+		if (shouldRender) {
+			this.render()
+		}
+	}
+
+	render() {}
+
+	createRootElement(tag, cssClasses, attributes) {
+		const rootElement = document.createElement(tag)
+		if (cssClasses) {
+			rootElement.className = cssClasses
+		}
+		if (attributes && attributes.length > 0) {
+			attributes.forEach((attr) => rootElement.setAttribute(attr.name, attr.value))
+		}
+		document.getElementById(this.renderHookId).append(rootElement)
+		return rootElement
+	}
+}
+
+class Product extends Component {
 	constructor(title, imageUrl, description, price) {
+		super("product-list", false)
 		this.title = title
 		this.imageUrl = imageUrl
 		this.description = description
 		this.price = price
+		this.render()
 	}
 
 	addToCart() {
@@ -13,8 +45,7 @@ class Product {
 	}
 
 	render() {
-		const prodEl = document.createElement("li")
-		prodEl.className = "product-item"
+		const prodEl = this.createRootElement("li", "product-item")
 		prodEl.innerHTML = `
                 <div>
                     <img src="${this.imageUrl}" alt="${this.title}">
@@ -28,66 +59,77 @@ class Product {
             `
 		const addToCartButton = prodEl.querySelector("button")
 		addToCartButton.addEventListener("click", () => this.addToCart())
-		return prodEl
 	}
 }
 
-class Cart {
-	items = []
+class Cart extends Component {
+	#items = []
 	totalEl = null
 
-	addProduct(product) {
-		this.items.push(product)
-		this.totalEl.textContent = `Total: \$${this.getTotal()}`
+	get items() {
+		return this.#items
 	}
 
-	getTotal() {
-		console.log(this.items)
+	set items(value) {
+		this.#items = value
+	}
+
+	constructor() {
+		super("app", false)
+		this.render()
+	}
+
+	set cartItems(items) {
+		this.items = items
+		this.totalEl.textContent = `Total: \$${this.totalAmount}`
+	}
+
+	get totalAmount() {
 		return this.items.reduce((acc, current) => acc + current.price, 0)
 	}
 
+	addProduct(product) {
+		const updatedItems = [...this.items, product]
+		this.cartItems = updatedItems
+	}
+
+	orderProducts() {
+		console.log("Ordering...")
+		console.log(this.items)
+	}
+
 	render() {
-		const cartEl = document.createElement("section")
+		const cartEl = this.createRootElement("section", "cart")
 		cartEl.innerHTML = `
                 <h2>Total: \$${0}</h2>
                 <button>Order Now!</button>
             `
-		cartEl.className = "cart"
+		this.orderButton = cartEl.querySelector("button")
 		this.totalEl = cartEl.querySelector("h2")
-		return cartEl
+
+		this.orderButton.addEventListener("click", () => this.orderProducts())
 	}
 }
 
-class ProductList {
-	products = [
-		new Product("Apples", FAKE_IMAGE_URL, "Apples are a good source of fiber", 10),
-		new Product("Oranges", FAKE_IMAGE_URL, "Oranges are a good source of vitamin C", 15),
-		new Product("Bananas", FAKE_IMAGE_URL, "Bananas are a good source of potassium", 20),
-		new Product("Grapes", FAKE_IMAGE_URL, "Grapes are a good source of antioxidants", 25),
-	]
+class ProductList extends Component {
+	constructor() {
+		super("app")
+	}
 
 	render() {
-		const prodList = document.createElement("ul")
-		prodList.className = "product-list"
-		this.products.forEach((prod) => {
-			const prodEl = prod.render()
-			prodList.append(prodEl)
-		})
-
-		return prodList
+		this.createRootElement("ul", "product-list", [{ name: "id", value: "product-list" }])
+		FAKE_PRODUCTS.forEach((product) => new Product(...product))
 	}
 }
 
 class Shop {
+	constructor() {
+		this.render()
+	}
+
 	render() {
-		const app = document.getElementById("app")
-		const productList = new ProductList().render()
-
+		new ProductList()
 		this.cart = new Cart()
-		const cartEl = this.cart.render()
-
-		app.append(cartEl)
-		app.append(productList)
 	}
 }
 
@@ -95,7 +137,6 @@ class App {
 	static cart
 	static init() {
 		const shop = new Shop()
-		shop.render()
 		this.cart = shop.cart
 	}
 

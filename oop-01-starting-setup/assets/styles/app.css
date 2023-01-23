@@ -58,6 +58,7 @@ button:active {
 	justify-content: space-between;
 	position: fixed;
 	width: 90%;
+	top: 0;
 }
 
 .cart h2 {
