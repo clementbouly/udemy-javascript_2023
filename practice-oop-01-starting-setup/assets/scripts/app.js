@@ -49,8 +49,7 @@ class ProjectItem {
 
 	connectMoreInfoButton() {
 		this.moreInfoButton = this.htmlEl.querySelector(`button:first-of-type`)
-		this.moreInfoButton.addEventListener("click", () => this.showMoreInfoHandler())
-		// this.moreInfoButton.onclick = this.showMoreInfoHandler.bind(this)
+		this.moreInfoButton.onclick = () => this.showMoreInfoHandler()
 	}
 
 	connectSwitchButton() {
@@ -65,9 +64,9 @@ class ProjectItem {
 
 	showMoreInfoHandler() {
 		if (this.hasActiveTooltip) return
-		this.hasActiveTooltip = true
-		const tooltip = new Tooltip(this.htmlEl.dataset.extraInfo, this.hideTooltip.bind(this))
+		const tooltip = new Tooltip(this.htmlEl.dataset.extraInfo, () => this.hideTooltip())
 		tooltip.show()
+		this.hasActiveTooltip = true
 	}
 
 	update(updateProjectList, type) {
@@ -91,7 +90,7 @@ class ProjectList {
 
 		for (const liProject of liProjects) {
 			this.projects.push(
-				new ProjectItem(liProject.id, this.switchProject.bind(this, liProject.id))
+				new ProjectItem(liProject.id, () => this.switchProject(liProject.id))
 			)
 		}
 	}
@@ -101,10 +100,9 @@ class ProjectList {
 	}
 
 	addProject(project) {
-		console.log("addProject")
 		this.projects.push(project)
 		DOMHelper.moveElement(project.id, `#${this.type}-projects ul`)
-		project.update(this.switchProject.bind(this, project.id), this.type)
+		project.update(() => this.switchProject(project.id), this.type)
 	}
 
 	switchProject(projectId) {
@@ -128,3 +126,36 @@ class App {
 }
 
 App.init()
+
+// CSS TRAINING
+
+const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+const replaceByRandomLetter = (word, initialWord, event, iterations) => {
+	const newWord = word
+		.split("")
+		.map((char, index) => {
+			if (index < iterations) return initialWord[index]
+
+			const randomLetter = LETTERS[Math.floor(Math.random() * LETTERS.length)]
+			return randomLetter
+		})
+		.join("")
+
+	event.target.textContent = newWord
+}
+
+const handleHackerEffect = (event) => {
+	const word = event.target.textContent
+	const initialWord = event.target.dataset.value
+	let iterations = 0
+
+	const interval = setInterval(() => {
+		replaceByRandomLetter(word, initialWord, event, iterations)
+		if (iterations > word.length) clearInterval(interval)
+		iterations += 1 / 3
+	}, 20)
+}
+
+document.querySelector("h1").onmouseover = handleHackerEffect
+document.querySelector("h1").onclick = handleHackerEffect
