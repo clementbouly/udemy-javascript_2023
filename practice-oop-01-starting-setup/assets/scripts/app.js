@@ -127,7 +127,8 @@ class App {
 
 App.init()
 
-// CSS TRAINING
+
+/********  CSS TRAINING **********/
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
