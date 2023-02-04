@@ -27,6 +27,7 @@ h1:hover {
 	justify-content: center;
 	align-items: center;
 	background: #ff0062;
+	margin-bottom: 1rem;
 }
 
 #main-header h1 {
@@ -142,4 +143,56 @@ button:active {
 #finished-projects header h2 {
 	color: white;
 	margin: 0;
+}
+
+#octo-svg {
+	cursor: pointer;
+	height: 5rem;
+}
+
+.octo-arm {
+	/* transform origin right */
+	transform-origin: 100% 100%;
+	transform-box: fill-box;
+	transition: all 0.5s;
+	background: red;
+	transform: translateX(2rem);
+}
+
+#octo-svg:hover .octo-arm {
+	cursor: pointer;
+	/* animation: agitate 0.5s ease-out infinite; */
+}
+
+/* #main-header,
+#active-projects,
+#finished-projects {
+	display: none;
+} */
+
+.svg-container {
+	display: grid;
+	place-content: center;
+}
+
+.animate {
+	animation: agitate 0.5s ease-out infinite;
+}
+
+@keyframes agitate {
+	0% {
+		transform: rotate(0deg) translateX(2rem);
+	}
+	25% {
+		transform: rotate(10deg) translateX(2rem);
+	}
+	50% {
+		transform: rotate(0deg) translateX(2rem);
+	}
+	75% {
+		transform: rotate(-10deg) translateX(2rem);
+	}
+	100% {
+		transform: rotate(0deg) translateX(2rem);
+	}
 }

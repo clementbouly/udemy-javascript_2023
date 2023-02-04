@@ -201,6 +201,7 @@ document.querySelector("h1").onclick = handleHackerEffect
 
 const translations = {
 	"You owe me": "tu me dois",
+	"My name is": "je m'appelle",
 }
 
 const i18n = (strings, ...values) => {
@@ -214,6 +215,13 @@ const i18n = (strings, ...values) => {
 }
 
 let amount = 10.3
+const name = "John"
 const french = i18n`You owe me ${amount}`
+const english = i18n`My name is ${name}`
 
-console.log(french)
+const octoSvg = document.querySelector("#octo-svg")
+const octoArm = document.querySelector(".octo-arm")
+
+octoSvg.addEventListener("click", () => {
+	octoArm.classList.toggle("animate")
+})
