@@ -45,6 +45,14 @@ class ProjectItem {
 
 		this.connectMoreInfoButton()
 		this.connectSwitchButton()
+		this.connectDrag()
+	}
+
+	connectDrag() {
+		this.htmlEl.addEventListener("dragstart", (event) => {
+			event.dataTransfer.setData("text/plain", this.id)
+			event.dataTransfer.effectAllowed = "move"
+		})
 	}
 
 	connectMoreInfoButton() {
@@ -93,6 +101,37 @@ class ProjectList {
 				new ProjectItem(liProject.id, () => this.switchProject(liProject.id))
 			)
 		}
+		this.connectDroppeable()
+	}
+
+	connectDroppeable() {
+		const listEl = this.listEl
+		listEl.addEventListener("dragenter", (event) => {
+			if (event.dataTransfer.types[0] === "text/plain") {
+				event.preventDefault()
+				listEl.parentElement.classList.add("droppable")
+			}
+		})
+
+		listEl.addEventListener("dragover", (event) => {
+			if (event.dataTransfer.types[0] === "text/plain") {
+				event.preventDefault()
+			}
+		})
+
+		listEl.addEventListener("dragleave", (event) => {
+			if (event.relatedTarget.closest(`#${this.type}-projects ul`) !== listEl) {
+				listEl.parentElement.classList.remove("droppable")
+			}
+		})
+
+		listEl.addEventListener("drop", (event) => {
+			const projectId = event.dataTransfer.getData("text/plain")
+			if (this.projects.find((p) => p.id === projectId)) return
+			document.getElementById(projectId).querySelector("button:last-of-type").click()
+			listEl.parentElement.classList.remove("droppable")
+			event.preventDefault()
+		})
 	}
 
 	setSwitchHandlerFunction(switchHandlerFunction) {
@@ -107,7 +146,7 @@ class ProjectList {
 
 	switchProject(projectId) {
 		this.switchHandler(this.projects.find((p) => p.id === projectId))
-		this.projects.filter((p) => p.id !== projectId)
+		this.projects = this.projects.filter((p) => p.id !== projectId)
 	}
 }
 
@@ -126,7 +165,6 @@ class App {
 }
 
 App.init()
-
 
 /********  CSS TRAINING **********/
 
@@ -160,3 +198,22 @@ const handleHackerEffect = (event) => {
 
 document.querySelector("h1").onmouseover = handleHackerEffect
 document.querySelector("h1").onclick = handleHackerEffect
+
+const translations = {
+	"You owe me": "tu me dois",
+}
+
+const i18n = (strings, ...values) => {
+	const stringTranslated = strings.map((string) => {
+		if (translations[string.trim()]) {
+			return translations[string.trim()]
+		}
+		return string
+	})
+	return `${stringTranslated[0]} ${values[0]}`
+}
+
+let amount = 10.3
+const french = i18n`You owe me ${amount}`
+
+console.log(french)
