@@ -225,3 +225,64 @@ const octoArm = document.querySelector(".octo-arm")
 octoSvg.addEventListener("click", () => {
 	octoArm.classList.toggle("animate")
 })
+
+const getUserPosition = () => {
+	navigator.geolocation.getCurrentPosition(
+		(position) => console.log(position),
+		(error) => console.log(error)
+	)
+
+	console.log("Getting position...")
+}
+
+const gitButton = document.querySelector("#octo-svg")
+
+const getFakeDate = () => {
+	fetch("https://jsonplaceholder.typicode.com/posts")
+		.then((response) => response.json())
+		.then((posts) => {
+			const firstTwoPosts = posts.slice(0, 2)
+			console.log({ firstTwoPosts })
+			firstTwoPosts.forEach((post) => {
+				fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`)
+					.then((response) => {
+						return response.json()
+					})
+					.then((comments) => {
+						console.log(`Comments for post : ${post.id}`)
+						console.log(comments)
+					})
+			})
+		})
+}
+
+const getGeoLocation = () => {
+	return new Promise((resolve, reject) => {
+		navigator.geolocation.getCurrentPosition(resolve, reject)
+	})
+}
+
+const generateError = () => {
+	return new Promise((resolve, reject) => {
+		reject("Error")
+	})
+}
+
+const logLocation = () => {
+	getGeoLocation()
+		.then((position) => {
+			console.log(position)
+		})
+		.then(() => {
+			return new Promise((resolve, reject) => {
+				setTimeout(() => reject("Fake Error"), 2000)
+			})
+		})
+		.catch((error) => {
+			console.log("CATCH ERROR", error)
+		})
+}
+
+gitButton.addEventListener("click", logLocation)
+
+// gitButton.addEventListener("click", getFakeDate)

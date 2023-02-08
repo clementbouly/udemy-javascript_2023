@@ -148,6 +148,7 @@ button:active {
 #octo-svg {
 	cursor: pointer;
 	height: 5rem;
+	width: 5rem;
 }
 
 .octo-arm {
