@@ -237,7 +237,7 @@ const getUserPosition = () => {
 
 const gitButton = document.querySelector("#octo-svg")
 
-const getFakeDate = () => {
+const getFakeData = () => {
 	fetch("https://jsonplaceholder.typicode.com/posts")
 		.then((response) => response.json())
 		.then((posts) => {
@@ -254,6 +254,31 @@ const getFakeDate = () => {
 					})
 			})
 		})
+		.catch((error) => {
+			console.log("ERROR CATCH : ", error)
+		})
+}
+
+// getFakeData2 with async/await with try/catch
+const getFakeData2 = async () => {
+	try {
+		const response = await fetch("https://jsonplaceholder.typicode.com/posts")
+		const posts = await response.json()
+		const firstTwoPosts = posts.slice(0, 2)
+		console.log({ firstTwoPosts })
+
+		const promises = firstTwoPosts.map(async (post) => {
+			const response = await fetch(
+				`https://jsonplaceholder.typicode.com/posts/${post.id}/comments`
+			)
+			const comments = await response.json()
+			console.log(`Comments for post : ${post.id}`)
+			console.log(comments)
+		})
+		await Promise.all(promises)
+	} catch (error) {
+		console.log("ERROR CATCH : ", error)
+	}
 }
 
 const getGeoLocation = () => {
@@ -262,27 +287,57 @@ const getGeoLocation = () => {
 	})
 }
 
-const generateError = () => {
+const randomErrorGenerator = () => {
 	return new Promise((resolve, reject) => {
-		reject("Error")
+		const random = Math.random()
+		setTimeout(() => {
+			if (random > 0.5) {
+				reject("Bad luck ! it's an error ...")
+			} else {
+				resolve({
+					message: "Good luck ! it's a result ...",
+					status: "SUCCESS",
+				})
+			}
+		}, 2000)
 	})
 }
 
-const logLocation = () => {
+const logLocation1 = () => {
 	getGeoLocation()
 		.then((position) => {
 			console.log(position)
 		})
 		.then(() => {
-			return new Promise((resolve, reject) => {
-				setTimeout(() => reject("Fake Error"), 2000)
-			})
+			console.log("Waiting for random error or result...")
+			return randomErrorGenerator()
+		})
+		.then((result) => {
+			console.log(`${result.status} : ${result.message} `)
 		})
 		.catch((error) => {
-			console.log("CATCH ERROR", error)
+			console.log("ERROR : ", error)
 		})
 }
 
-gitButton.addEventListener("click", logLocation)
+// logLocation async/await
+const logLocation2 = async () => {
+	try {
+		const position = await getGeoLocation()
+		console.log(position)
+		console.log("Waiting for random error or result...")
+		const result = await randomErrorGenerator()
+		console.log(`${result.status} : ${result.message} `)
+	} catch (error) {
+		console.log("ERROR : ", error)
+	}
+}
+
+const test = async () => {
+	await getFakeData2()
+	console.log("getFakeData DONE")
+}
+
+gitButton.addEventListener("click", test)
 
 // gitButton.addEventListener("click", getFakeDate)
