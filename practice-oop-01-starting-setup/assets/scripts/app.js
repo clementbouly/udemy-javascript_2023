@@ -302,7 +302,7 @@ const randomErrorGenerator = () => {
 		}, 2000)
 	})
 }
-
+// logLocation with then / catch
 const logLocation1 = () => {
 	getGeoLocation()
 		.then((position) => {
@@ -338,6 +338,46 @@ const test = async () => {
 	console.log("getFakeData DONE")
 }
 
-gitButton.addEventListener("click", test)
+const displayGithubUser = async () => {
+	let urls = [
+		"https://api.github.com/users/iliakan",
+		"https://api.github.com/users/remy",
+		"https://no-such-url",
+	]
 
-// gitButton.addEventListener("click", getFakeDate)
+	let requests = urls.map((url) => fetch(url))
+
+	// use Promise.allSettled
+	let results = await Promise.allSettled(requests)
+
+	results.forEach((result, num) => {
+		if (result.status == "fulfilled") {
+			console.log(`${urls[num]}: ${result.value.status}`)
+		}
+		if (result.status == "rejected") {
+			console.log(`${urls[num]}: ${result.reason}`)
+		}
+	})
+}
+
+const displayGithubUser2 = () => {
+	let urls = [
+		"https://api.github.com/users/iliakan",
+		"https://api.github.com/users/remy",
+		"https://no-such-url",
+	]
+
+	Promise.allSettled(urls.map((url) => fetch(url))).then((results) => {
+		// (*)
+		results.forEach((result, num) => {
+			if (result.status == "fulfilled") {
+				console.log(`${urls[num]}: ${result.value.status}`)
+			}
+			if (result.status == "rejected") {
+				console.log(`${urls[num]}: ${result.reason}`)
+			}
+		})
+	})
+}
+
+gitButton.addEventListener("click", getFakeData2)
