@@ -1,15 +1,15 @@
 {
-  "name": "practice-oop-01-starting-setup",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.34.0",
-    "vite": "^4.1.1"
-  }
+	"name": "practice-oop-01-starting-setup",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"eslint": "^8.34.0",
+		"vite": "^4.1.1"
+	}
 }

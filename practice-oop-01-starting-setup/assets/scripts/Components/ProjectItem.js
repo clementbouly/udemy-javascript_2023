@@ -21,12 +21,12 @@ export class ProjectItem {
 	}
 
 	connectMoreInfoButton() {
-		this.moreInfoButton = this.htmlEl.querySelector(`button:first-of-type`)
+		this.moreInfoButton = this.htmlEl.querySelector("button:first-of-type")
 		this.moreInfoButton.onclick = () => this.showMoreInfoHandler()
 	}
 
 	connectSwitchButton() {
-		this.switchButton = this.htmlEl.querySelector(`button:last-of-type`)
+		this.switchButton = this.htmlEl.querySelector("button:last-of-type")
 		this.switchButton = DOMHelper.clearEventListeners(this.switchButton)
 		this.switchButton.addEventListener("click", this.updateProjectList)
 	}
