@@ -1,0 +1,17 @@
+{
+	"name": "my-place",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "vite",
+		"build": "vite build"
+	},
+	"author": "Clement",
+	"license": "ISC",
+	"browserslist": "> 0.5%",
+	"devDependencies": {
+		"vite": "^4.1.1"
+	}
+}
