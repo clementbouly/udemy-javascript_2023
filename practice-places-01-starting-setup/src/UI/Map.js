@@ -4,14 +4,14 @@ export class Map {
 	}
 
 	render(coordinates) {
-		if (typeof google === "undefined" && !google.maps) {
+		if (typeof google === "undefined" || !google.maps) {
 			alert("Could not load maps library - please try again later!")
 			return
 		}
 
 		const map = new google.maps.Map(document.getElementById("map"), {
 			center: coordinates,
-			zoom: 8,
+			zoom: 4,
 		})
 
 		new google.maps.Marker({
