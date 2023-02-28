@@ -27,10 +27,29 @@ function* employeeGenerator() {
 	}
 }
 
-for (const iterator of company) {
-	console.log(iterator)
+// for (const iterator of company) {
+// 	console.log(iterator)
+// }
+
+// for (const employee of company.employees) {
+// 	console.log(employee + " is an employee BUT NOT USING GENERATOR")
+// }
+
+const course = {
+	title: "JavaScript - The Complete Guide",
+	rating: 5,
 }
 
-for (const employee of company.employees) {
-	console.log(employee + " is an employee BUT NOT USING GENERATOR")
-}
+Reflect.setPrototypeOf(course, {
+	toString() {
+		return `REFLECT : ${this.title} - ${this.rating}`
+	},
+})
+
+Object.setPrototypeOf(course, {
+	toString() {
+		return `OBJECT : ${this.title} - ${this.rating}`
+	},
+})
+
+console.log(course.toString())
