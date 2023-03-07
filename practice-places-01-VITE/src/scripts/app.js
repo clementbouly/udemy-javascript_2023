@@ -35,7 +35,8 @@ const handleAddressFormSubmit = async (event) => {
 		const coords = await getCoordsFromAddress(enteredAddress)
 		hideModal()
 		displayMap(coords)
-		displayShareableLink(enteredAddress, coords)
+		const response = await postLocation(enteredAddress, coords)
+		displayShareableLink(response.locId)
 	} catch (error) {
 		console.log(error)
 		hideModal()
@@ -52,7 +53,8 @@ const displayUserLocation = async () => {
 			window.initMap = displayMap(userCoords)
 			const address = await getAddressFromCoords(userCoords)
 			updateAddressInput(address)
-			displayShareableLink(address, userCoords)
+			const response = await postLocation(address, userCoords)
+			displayShareableLink(response.locId)
 		}
 	} catch (error) {
 		console.log(error)
@@ -60,11 +62,29 @@ const displayUserLocation = async () => {
 	}
 }
 
-const displayShareableLink = (address, coordinates) => {
-	link.value = `${location.origin}/my-place/?address=${encodeURI(address)}&lat=${
-		coordinates.lat
-	}&lng=${coordinates.lng}`
+const displayShareableLink = (locationId) => {
+	link.value = `${location.origin}/my-place/?locationId=${locationId}`
 	shareButton.disabled = false
+}
+
+const postLocation = async (address, coords) => {
+	try {
+		const response = await fetch("http://localhost:3000/add-location", {
+			method: "POST",
+			body: JSON.stringify({
+				address: address,
+				lat: coords.lat,
+				lng: coords.lng,
+			}),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		})
+		const data = await response.json()
+		return data
+	} catch (error) {
+		console.log(error)
+	}
 }
 
 const navigateToSharePlace = () => {

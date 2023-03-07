@@ -1,4 +1,4 @@
-const GOOGLE_MAP_API_KEY = "AIzaSyA6shePJUpJZh5wZaEfLOsBVxTj6nrIo54"
+const GOOGLE_MAP_API_KEY = "**************************"
 
 export const getCoordsFromAddress = async (address) => {
 	const response = await fetch(
@@ -10,8 +10,8 @@ export const getCoordsFromAddress = async (address) => {
 	if (!data || data.status === "ZERO_RESULTS") {
 		throw new Error("Could not find location for the specified address.")
 	}
-	const coordinates = data.results[0].geometry.location
-	return coordinates
+	const coords = data.results[0].geometry.location
+	return coords
 }
 
 export const getAddressFromCoords = async (coords) => {
