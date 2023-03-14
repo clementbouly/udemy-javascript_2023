@@ -1,28 +1,28 @@
-import { renderProducts } from "./rendering"
+import { renderProducts, addNewProductElement } from "./rendering"
 
 let products = [
 	{
-		id: new Date("1/1/1970").toString(),
+		id: Math.random().toString(),
 		title: "A Book",
 		price: 12.99,
 	},
 	{
-		id: new Date("1/2/1970").toString(),
+		id: Math.random().toString(),
 		title: "A Carpet",
 		price: 129.99,
 	},
 	{
-		id: new Date("1/3/1970").toString(),
+		id: Math.random().toString(),
 		title: "A Magic Broomstick",
 		price: 599.99,
 	},
 	{
-		id: new Date("1/4/1970").toString(),
+		id: Math.random().toString(),
 		title: "A Bottle",
 		price: 2.99,
 	},
 	{
-		id: new Date("1/5/1970").toString(),
+		id: Math.random().toString(),
 		title: "A T-Shirt",
 		price: 29.99,
 	},
@@ -33,15 +33,9 @@ export function initProducts() {
 }
 
 export function deleteProduct(prodId) {
-	console.log("Deleting product with id: " + prodId)
-	const updatedProducts = []
-	for (const prod of products) {
-		if (prod.id !== prodId) {
-			updatedProducts.push(prod)
-		}
-	}
-	products = updatedProducts
-	renderProducts(products, deleteProduct)
+	products = products.filter((product) => product.id !== prodId)
+	const productToDelete = document.getElementById(prodId)
+	productToDelete.remove()
 }
 
 export function addProduct(event) {
@@ -64,5 +58,5 @@ export function addProduct(event) {
 	}
 
 	products.unshift(newProduct)
-	renderProducts(products, deleteProduct)
+	addNewProductElement(newProduct, deleteProduct)
 }

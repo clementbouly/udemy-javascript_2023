@@ -1,7 +1,10 @@
-import { initProducts, addProduct } from './product-management';
+import { initProducts, addProduct } from "./product-management"
 
-const addProductForm = document.getElementById('new-product');
+const addProductForm = document.getElementById("new-product")
 
-initProducts();
+initProducts()
 
-addProductForm.addEventListener('submit', addProduct);
+addProductForm.addEventListener(
+	"submit",
+	addProduct
+)
