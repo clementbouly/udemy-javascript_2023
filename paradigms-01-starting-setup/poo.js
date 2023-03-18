@@ -1,3 +1,17 @@
+class Validator {
+	static REQUIRED = "REQUIRED"
+	static MIN_LENGTH = "MIN_LENGTH"
+
+	static validate(value, flag, validatorValue) {
+		if (flag === this.REQUIRED) {
+			return value.trim().length > 0
+		}
+		if (flag === this.MIN_LENGTH) {
+			return value.trim().length > validatorValue
+		}
+	}
+}
+
 class UserForm {
 	constructor(formId) {
 		this.form = document.getElementById(formId)
@@ -8,30 +22,20 @@ class UserForm {
 
 	submit(e) {
 		e.preventDefault()
+		const username = this.usernameInput.value
+		const password = this.passwordInput.value
 
-		this.validate(this.usernameInput.value, this.passwordInput.value)
-
-		if (!this.username || !this.password) {
+		if (
+			!Validator.validate(username, Validator.REQUIRED) ||
+			!Validator.validate(password, Validator.MIN_LENGTH, 5)
+		) {
+			alert("Invalid input, please try again")
 			return
 		}
 
-		this.user = new User(this.username, this.password)
+		this.user = new User(username, password)
 		this.user.print()
 		this.user.greet()
-	}
-
-	validate(username, password) {
-		if (username.trim().length === 0) {
-			alert("Invalid username")
-			return false
-		}
-		if (password.trim().length <= 5) {
-			alert("Password too short")
-			return false
-		}
-
-		this.username = username
-		this.password = password
 	}
 
 	getUser() {

@@ -25,24 +25,35 @@ const greetUser = (user) => {
 	console.log(`Hi there, my name is ${user.username}`)
 }
 
-const handleUser = (e) => {
-	e.preventDefault()
+const getUserInput = () => {
 	const usernameInput = document.getElementById("username")
 	const passwordInput = document.getElementById("password")
+	// how to check if an html element is an input element?
+	if (usernameInput.tagName !== "INPUT" || passwordInput.tagName !== "INPUT") {
+		throw new Error("Invalid input element")
+	}
+	return [usernameInput.value, passwordInput.value]
+}
 
-	if (!validateUserInput(usernameInput.value, passwordInput.value)) {
+const handleUser = (e, getUserInput, validator, userFactory, printUser, greetUser) => {
+	e.preventDefault()
+	const [username, password] = getUserInput()
+
+	if (!validator(username, password)) {
 		return
 	}
 
-	const user = userFactory(usernameInput.value, passwordInput.value)
+	const user = userFactory(username, password)
 
 	printUser(user)
 	greetUser(user)
 }
 
-const initForm = () => {
-	const formElement = document.getElementById("user-input")
-	formElement.addEventListener("submit", handleUser)
+const initForm = (formId, formHandler) => {
+	const formElement = document.getElementById(formId)
+	formElement.addEventListener("submit", formHandler)
 }
 
-initForm()
+initForm("user-input", (e) =>
+	handleUser(e, getUserInput, validateUserInput, userFactory, printUser, greetUser)
+)
