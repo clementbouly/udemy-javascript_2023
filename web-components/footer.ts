@@ -5,11 +5,11 @@ export class Footer extends HTMLElement {
 
 		this.shadow = this.attachShadow({ mode: "open" })
 
-		const footer = document.createElement("footer")
-		const text = document.createElement("p")
-		text.textContent = "This is the footer"
-
-		footer.appendChild(text)
+		this.shadow.innerHTML = /*html*/ `
+		<footer>
+			<slot></slot>
+		</footer>
+		`
 
 		const style = document.createElement("style")
 		style.textContent = /*css*/ `
@@ -19,11 +19,11 @@ export class Footer extends HTMLElement {
           text-align: center;
           padding: 1rem;
           margin: 1rem 0;
+		  font-weight: bold;
         }
       `
 
 		this.shadow.appendChild(style)
-		this.shadow.appendChild(footer)
 	}
 }
 

@@ -10,21 +10,25 @@
 	<style>
 		html {
 			--color1: rgb(107, 60, 60);
+			font-family: sans-serif;
 		}
 		body {
 			box-sizing: border-box;
 			margin: 0;
 		}
-
-		div {
-			border: 1px solid red;
-		}
 	</style>
 	<body>
+		<my-footer>Tooltip practice</my-footer>
 		<my-tooltip text="tooltip text">Web Components are cool</my-tooltip>
 		<my-tooltip text="React, React or React">Choose a JS framework</my-tooltip>
-		<my-footer></my-footer>
 		<my-tooltip text="I'm a bonus tooltip">Bonus tooltip</my-tooltip>
 		<my-tooltip text="I'm the last tooltip and i have a long text ">Last tooltip</my-tooltip>
+
+		<my-footer>Modal practice</my-footer>
+		<button>Toggle Modal</button>
+		<modal-component>
+			<h1 slot="title">Please confirm</h1>
+			With your confirmation, you are agreeing to our terms and conditions.
+		</modal-component>
 	</body>
 </html>

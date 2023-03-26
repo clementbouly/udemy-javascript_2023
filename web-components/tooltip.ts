@@ -1,4 +1,4 @@
-export class Tooltip extends HTMLElement {
+class Tooltip extends HTMLElement {
 	private tooltipText: string | null
 	private tooltipContainer: HTMLDivElement | null
 	private shadow: ShadowRoot
