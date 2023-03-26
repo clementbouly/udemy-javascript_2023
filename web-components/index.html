@@ -8,6 +8,9 @@
 		<script src="app.ts" type="module"></script>
 	</head>
 	<style>
+		html {
+			--color1: rgb(107, 60, 60);
+		}
 		body {
 			box-sizing: border-box;
 			margin: 0;
@@ -16,17 +19,12 @@
 		div {
 			border: 1px solid red;
 		}
-
-		.tooltip {
-			margin: 1rem;
-			position: relative;
-			display: inline-block;
-		}
 	</style>
 	<body>
-		<my-tooltip text="tooltip text" class="tooltip">Web Components are cool</my-tooltip>
-		<my-tooltip text="React, React or React" class="tooltip">Choose a JS framework</my-tooltip>
+		<my-tooltip text="tooltip text">Web Components are cool</my-tooltip>
+		<my-tooltip text="React, React or React">Choose a JS framework</my-tooltip>
 		<my-footer></my-footer>
-		<my-tooltip text="I'm a bonus tooltip" class="tooltip">Bonus tooltip</my-tooltip>
+		<my-tooltip text="I'm a bonus tooltip">Bonus tooltip</my-tooltip>
+		<my-tooltip text="I'm the last tooltip and i have a long text ">Last tooltip</my-tooltip>
 	</body>
 </html>

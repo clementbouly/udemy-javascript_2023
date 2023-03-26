@@ -23,7 +23,7 @@ export class Tooltip extends HTMLElement {
 
 		const tooltipStyle = document.createElement("style")
 		tooltipStyle.textContent = /*css*/ `
-			.tooltip {
+			:host {
 				position: relative;
 				display: block;
 				margin: 1rem;
@@ -31,7 +31,7 @@ export class Tooltip extends HTMLElement {
 			}
 
 			.tooltip-icon {
-				background-color: black;
+				background-color: var(--color1);
 				color: white;
 				border-radius: 0.25rem;
 				padding: 0.15rem 0.5rem;
@@ -42,10 +42,10 @@ export class Tooltip extends HTMLElement {
 			}
 
 			.tooltip-container {
-				background-color: black;
+				background-color: var(--color1);
 				color: white;
 				border-radius: 0.25rem;
-				padding: 0.15rem 0.5rem;
+				padding: 0.5rem;
 				text-align: center;
 				font-size: 0.75rem;
 				margin-left: 0.5rem;
@@ -53,11 +53,24 @@ export class Tooltip extends HTMLElement {
 				width: max-content;
 				position: absolute;
                 right: 0;
+				transform: translateX(100%);
+				z-index: 10;
+				box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.26);
 			}
 		`
-
 		this.shadow.appendChild(tooltipIcon)
 		this.shadow.appendChild(tooltipStyle)
+	}
+
+	attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+		if (oldValue === newValue) return
+		if (name === "text") {
+			this.tooltipText = newValue
+		}
+	}
+
+	static get observedAttributes() {
+		return ["text"]
 	}
 
 	private showTooltip() {
